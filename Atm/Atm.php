@@ -3,30 +3,44 @@
 namespace Atm;
 class Atm
 {
-    private $bills = [];
-    private $result = [];
-
+    public Bill $bill;
 
     public function bill(){
-        return $this;
-    }
-    public function addBill($nota)
-    {
-        $this->bills[] = $nota;
+        $this->bill = new Bill();
 
-
-
-        return $this;
+        return $this->bill;
     }
 
     public function withdraw()
     {
+        return new Withdraw($this->bill->bills);
+    }
+}
+
+class Bill{
+    public $bills = [];
+
+    public function addBill($nota)
+    {
+        $this->bills[] = $nota;
+
         return $this;
     }
+}
+
+class Withdraw{
+
+    private $bills;
+
+    public $result = [];
+
+    public function __construct($bills)
+    {
+        $this->bills = $bills;
+    }
+
     public function ammount($ammount)
     {
-        $this->result = [];
-
         $total = $ammount;
 
         foreach ($this->bills as $bill) {
